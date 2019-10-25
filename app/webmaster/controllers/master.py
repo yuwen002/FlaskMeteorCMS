@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required
 from app.webmaster import master_blueprint
-from app.webmaster.forms.master import MasterLoginForm
+from app.webmaster.forms.master import MasterLoginForm, RegisterUserForm
 from app.models import MasterUser
 from app.extensions import db
 
@@ -23,6 +23,27 @@ def login():
             return redirect(request.args.get('next') or url_for('master.welcome'))
         flash('无效的用户名或密码')
     return render_template('master/login.html', form=form)
+
+
+# 后台用户注册
+@master_blueprint.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterUserForm()
+    if form.validate_on_submit():
+        # post 字段
+        username = form.username.data
+        password = form.password.data
+        email = form.email.data
+
+        # 注册用户数据写入
+        master_user = MasterUser(username=username, password=password, email=email)
+        db.session.add(master_user)
+        db.session.commit()
+
+        flash('注册成功')
+        return redirect(url_for('master.login'))
+
+    return render_template('master/register.html', form=form)
 
 
 @master_blueprint.route('/welcome')
