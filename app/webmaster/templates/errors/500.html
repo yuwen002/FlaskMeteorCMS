@@ -1,0 +1,24 @@
+{% extends '_layout/_base.html' %}
+
+{% block title %}500{% endblock %}
+{% block keywords %}500{% endblock %}
+{% block description %}500{% endblock %}
+{% block body %}
+<div class="tpl-content-wrapper">
+    <div class="row-content am-cf">
+        {% include '_layout/_theme_js.html' %}
+        <div class="widget am-cf">
+            <div class="widget-body">
+                <div class="tpl-page-state">
+                    <div class="tpl-page-state-title am-text-center tpl-error-title">500</div>
+                    <div class="tpl-error-title-info">Internal Server Error</div>
+                    <div class="tpl-page-state-content tpl-error-content">
+                        <p>服务器内部错误，不能执行该请求</p>
+                        <button type="button" class="am-btn am-btn-secondary am-radius tpl-error-btn">Back Home</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

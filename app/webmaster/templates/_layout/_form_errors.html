@@ -1,0 +1,7 @@
+{% macro errors_info(errors) %}
+    {% if errors %}
+        {% for error in errors %}
+            <p class="am-text-danger">{{ error }}</p>
+        {% endfor %}
+    {% endif %}
+{% endmacro %}

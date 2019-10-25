@@ -1,0 +1,50 @@
+{% extends 'master/_layout/_base.html' %}
+
+{% block title %}用户注册{% endblock %}
+{% block keywords %}用户注册{% endblock %}
+{% block description %}用户注册{% endblock %}
+{% block body %}
+    <body data-type="login">
+    {% include 'master/_layout/_theme_js.html' %}
+    <div class="am-g tpl-g">
+        <!-- 风格切换 -->
+        {% include 'master/_layout/_theme_code.html' %}
+        <div class="tpl-login">
+            <div class="tpl-login-content">
+                {% from 'master/_layout/_form_errors.html' import errors_info %}
+                <form class="am-form tpl-form-line-form" method="post" action="{{ url_for('master.register') }}">
+                    <div class="am-form-group">
+                        {{ form.email(class="tpl-form-input", placeholder="邮箱") }}
+                        {{ errors_info(form.email.errors) }}
+                    </div>
+
+                    <div class="am-form-group">
+                        {{ form.username(class="tpl-form-input", placeholder="用户名") }}
+                        {{ errors_info(form.username.errors) }}
+                    </div>
+
+                    <div class="am-form-group">
+                        {{ form.password(class="tpl-form-input", placeholder="请输入密码") }}
+                        {{ errors_info(form.password.errors) }}
+                    </div>
+
+                    <div class="am-form-group">
+                        {{ form.confirm_password(class="tpl-form-input", placeholder="再次输入密码") }}
+                        {{ errors_info(form.confirm_password.errors) }}
+                    </div>
+                    <div class="am-form-group">
+                        {{ form.hidden_tag() }}
+                        <button type="submit" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn">提交</button>
+                    </div>
+                </form>
+                <div class="tpl-login-title">注册用户</div>
+                <span class="tpl-login-content-info">
+                  创建一个新的用户
+                </span>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='assets/js/amazeui.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/app.js') }}"></script>
+    </body>
+{% endblock %}

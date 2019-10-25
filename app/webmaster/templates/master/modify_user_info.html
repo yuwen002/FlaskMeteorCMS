@@ -1,0 +1,122 @@
+{% extends 'master/_layout/_base.html' %}
+
+{% block title %}Welcome{% endblock %}
+{% block body %}
+    <body data-type="widgets">
+    {% include 'master/_layout/_theme_js.html' %}
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        {% include 'master/_layout/_header.html' %}
+        <!-- 风格切换 -->
+        {% include 'master/_layout/_theme_code.html' %}
+        <!-- 侧边导航栏 -->
+        {% include 'master/_layout/_left_nav.html' %}
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+
+            <div class="container-fluid am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 个人信息
+                            <small>编辑</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row-content am-cf">
+
+                <div class="row">
+                    {% from 'master/_layout/_form_errors.html' import errors_info %}
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">基本信息修改</div>
+                            </div>
+                            <div class="widget-body am-fr">
+
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('master.modify_user_info') }}">
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">密码</label>
+                                        <div class="am-u-sm-9">
+                                            {{ form_info.password(class="tpl-form-input", placeholder="请输入密码") }}
+                                            <small>输入您的登入密码</small>
+                                            {{ errors_info(form_info.password.errors) }}
+                                        </div>
+                                    </div>
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">Email</label>
+                                        <div class="am-u-sm-9">
+                                            {{ form_info.email(class="tpl-form-input", placeholder="请入输邮箱") }}
+                                            {{ errors_info(form_info.email.errors) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            {{ form_password.hidden_tag() }}
+                                            <button type="submit" value="user_info" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">密码修改</div>
+                                <div class="widget-function am-fr">
+                                    <a href="javascript:;" class="am-icon-cog"></a>
+                                </div>
+                            </div>
+                            <div class="widget-body am-fr">
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" action="{{ url_for('master.modify_user_info') }}" method="post">
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">原密码</label>
+                                        <div class="am-u-sm-9">
+                                                {{ form_password.old_password(placeholder="请输入原密码", class="tpl-form-input", autocomplete="off") }}
+                                                {{ errors_info(form_password.old_password.errors) }}
+                                                {{ errors_info(get_flashed_messages(category_filter='form_password')) }}
+                                            </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">新密码</label>
+                                        <div class="am-u-sm-9">
+                                            {{ form_password.new_password(placeholder="请输入新密码", class="tpl-form-input", autocomplete="off") }}
+                                            {{ errors_info(form_password.new_password.errors) }}
+                                            <small>密码长度在6-32个字符之间。</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">确认密码</label>
+                                        <div class="am-u-sm-9">
+                                                {{ form_password.confirm_new_password(class="tpl-form-input", placeholder="请再次输入新密码", autocomplete="off") }}
+                                                {{ errors_info(form_password.confirm_new_password.errors) }}
+                                            </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            {{ form_password.hidden_tag() }}
+                                            <button type="submit" value="user_password" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% include 'master/_layout/_footer_js.html' %}
+    </body>
+{% endblock %}
