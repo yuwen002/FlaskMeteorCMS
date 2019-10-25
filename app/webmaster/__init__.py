@@ -8,4 +8,4 @@ master_blueprint = Blueprint(
     template_folder='./templates',
 )
 
-from app.webmaster.controllers import errors, master
+from app.webmaster.controllers import master, errors

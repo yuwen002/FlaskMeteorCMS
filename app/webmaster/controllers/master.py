@@ -1,7 +1,7 @@
 # coding: UTF-8
 from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request
-from flask_login import login_user
+from flask_login import login_user, login_required
 from app.webmaster import master_blueprint
 from app.webmaster.forms.master import MasterLoginForm
 from app.models import MasterUser
@@ -23,3 +23,9 @@ def login():
             return redirect(request.args.get('next') or url_for('master.welcome'))
         flash('无效的用户名或密码')
     return render_template('master/login.html', form=form)
+
+
+@master_blueprint.route('/welcome')
+@login_required
+def welcome():
+    return 'welcome'
