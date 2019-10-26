@@ -1,16 +1,16 @@
-{% extends 'master/_layout/_base.html' %}
+{% extends '_layout/_base.html' %}
 
 {% block title %}Welcome{% endblock %}
 {% block body %}
     <body data-type="widgets">
-    {% include 'master/_layout/_theme_js.html' %}
+    {% include '_layout/_theme_js.html' %}
     <div class="am-g tpl-g">
         <!-- 头部 -->
-        {% include 'master/_layout/_header.html' %}
+        {% include '_layout/_header.html' %}
         <!-- 风格切换 -->
-        {% include 'master/_layout/_theme_code.html' %}
+        {% include '_layout/_theme_code.html' %}
         <!-- 侧边导航栏 -->
-        {% include 'master/_layout/_left_nav.html' %}
+        {% include '_layout/_left_nav.html' %}
         <!-- 内容区域 -->
         <div class="tpl-content-wrapper">
 
@@ -27,7 +27,7 @@
             <div class="row-content am-cf">
 
                 <div class="row">
-                    {% from 'master/_layout/_form_errors.html' import errors_info %}
+                    {% from '_layout/_form_errors.html' import errors_info %}
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
@@ -117,6 +117,6 @@
             </div>
         </div>
     </div>
-    {% include 'master/_layout/_footer_js.html' %}
+    {% include '_layout/_footer_js.html' %}
     </body>
 {% endblock %}

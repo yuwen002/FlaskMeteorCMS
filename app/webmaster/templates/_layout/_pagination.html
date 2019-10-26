@@ -1,13 +1,23 @@
+{% macro pagination_widget(pagination, endpoint) %}
 <div class="am-u-lg-12 am-cf">
     <div class="am-fr">
         <ul class="am-pagination tpl-pagination">
-            <li class="am-disabled"><a href="#">«</a></li>
-            <li class="am-active"><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">»</a></li>
+            {% if pagination.has_prev %}
+            <li class="am-disabled"><a href="{{ url_for(endpoint, page=pagination.page - 1, **kwargs) }}">«</a></li>
+            {% endif %}
+            {% for p in pagination.iter_pages() %}
+                {% if p %}
+                    {% if p == pagination.page %}
+                        <li class="am-active"><a>{{ p }}</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for(endpoint, page=p, **kwargs) }}">{{ p }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if pagination.has_next %}
+            <li><a href="{{ url_for(endpoint, page=pagination.page + 1, **kwargs) }}">»</a></li>
+            {% endif %}
         </ul>
     </div>
 </div>
+{% endmacro %}

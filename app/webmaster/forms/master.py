@@ -31,3 +31,28 @@ class RegisterUserForm(FlaskForm):
         master_user = MasterUser.query.filter_by(email=email.data).first()
         if master_user:
             raise ValidationError('该邮箱已注册使用，请选用其它邮箱')
+
+    # 用户修改密码
+    class ModifyUserPasswordForm(FlaskForm):
+        old_password = PasswordField('原密码', validators=[DataRequired(message='原密码不能为空')])
+        new_password = PasswordField('新密码', validators=[DataRequired(message='新密码不能为空'), Length(min=6, max=32, message='密码长度在6~32位之间')])
+        confirm_new_password = PasswordField('确认密码', validators=[DataRequired(message='确认密码不能为空'), EqualTo('new_password', message='两次密码不一致')])
+
+
+# 用户基本信息修改
+class ModifyUserInfoForm(FlaskForm):
+    password = PasswordField('密码', validators=[DataRequired(message='密码不能为空')])
+    email = StringField('邮箱', validators=[DataRequired(message='邮箱不能为空'), Email(message='无效的邮箱格式')])
+
+
+# 用户修改密码
+class ModifyUserPasswordForm(FlaskForm):
+    old_password = PasswordField('原密码', validators=[DataRequired(message='原密码不能为空')])
+    new_password = PasswordField('新密码', validators=[DataRequired(message='新密码不能为空'), Length(min=6, max=32, message='密码长度在6~32位之间')])
+    confirm_new_password = PasswordField('确认密码', validators=[DataRequired(message='确认密码不能为空'), EqualTo('new_password', message='两次密码不一致')])
+
+
+# 用户基本信息修改
+class ModifyUserInfoForm(FlaskForm):
+    password = PasswordField('密码', validators=[DataRequired(message='密码不能为空')])
+    email = StringField('邮箱', validators=[DataRequired(message='邮箱不能为空'), Email(message='无效的邮箱格式')])

@@ -1,16 +1,16 @@
-{% extends 'master/_layout/_base.html' %}
+{% extends '_layout/_base.html' %}
 
 {% block title %}Welcome{% endblock %}
 {% block body %}
     <body data-type="index">
-    {% include 'master/_layout/_theme_js.html' %}
+    {% include '_layout/_theme_js.html' %}
     <div class="am-g tpl-g">
         <!-- 头部 -->
-        {% include 'master/_layout/_header.html' %}
+        {% include '_layout/_header.html' %}
         <!-- 风格切换 -->
-        {% include 'master/_layout/_theme_code.html' %}
+        {% include '_layout/_theme_code.html' %}
         <!-- 侧边导航栏 -->
-        {% include 'master/_layout/_left_nav.html' %}
+        {% include '_layout/_left_nav.html' %}
         <!-- 内容区域 -->
         <div class="tpl-content-wrapper">
 
@@ -21,7 +21,7 @@
                             <small>Lxy CMS</small>
                         </div>
                         <p class="page-header-description">Welcome, Lxy CMS</p>
-                        {% from 'master/_layout/_flashed_messages_success.html' import success_info %}
+                        {% from '_layout/_flashed_messages_success.html' import success_info %}
                         {{ success_info(get_flashed_messages(category_filter='')) }}
                     </div>
                 </div>
@@ -30,7 +30,7 @@
 
         </div>
     </div>
-    {% include 'master/_layout/_footer_js.html' %}
+    {% include '_layout/_footer_js.html' %}
     <script>
 
     </script>
