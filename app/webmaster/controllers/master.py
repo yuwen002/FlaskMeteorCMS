@@ -118,3 +118,15 @@ def user_list():
     users = paginate.items
 
     return render_template('master/user_list.html', users=users, paginate=paginate);
+
+
+@master_blueprint.route('/user_edit/<int:id>', methods=['PUT'])
+@login_required
+def user_delete(id):
+    pass
+
+
+@master_blueprint.route('/user_delete/<int:id>', methods=['DELETE'])
+@login_required
+def user_delete(id):
+    pass
