@@ -62,6 +62,7 @@ def logout():
     return redirect(url_for('master.login'))
 
 
+# 当前用户信息
 @master_blueprint.route('/user_info')
 @login_required
 def user_info():
@@ -71,6 +72,7 @@ def user_info():
     return render_template('master/modify_user_info.html', form_password=form_password, form_info=form_info)
 
 
+# 更改当前用户信息
 @master_blueprint.route('/modify_user_info', methods=['POST'])
 @login_required
 def modify_user_info():
@@ -88,6 +90,7 @@ def modify_user_info():
     return render_template('master/modify_user_info.html', form_password=form_password, form_info=form_info)
 
 
+# 更改当前用户密码
 @master_blueprint.route('/modify_user_password', methods=['POST'])
 @login_required
 def modify_user_password():
@@ -108,25 +111,31 @@ def modify_user_password():
     return render_template('master/modify_user_info.html', form_password=form_password, form_info=form_info)
 
 
+# 用户信息列表
 @master_blueprint.route('/user_list')
 @login_required
 def user_list():
     page = request.args.get('page', 1, type=int)
     limit = 20
     paginate = MasterUser.query.filter(MasterUser.username != 'webmaster').order_by(MasterUser.id.desc()).paginate(page, per_page=limit, error_out=False)
-    print(paginate)
     users = paginate.items
 
     return render_template('master/user_list.html', users=users, paginate=paginate);
 
 
-@master_blueprint.route('/user_edit/<int:id>', methods=['PUT'])
+@master_blueprint.route('/user_edit/<int:id>', methods=['DELETE'])
 @login_required
-def user_delete(id):
+def user_edit(id):
     pass
 
 
-@master_blueprint.route('/user_delete/<int:id>', methods=['DELETE'])
+# 删除用户信息
+@master_blueprint.route('/user_delete/<int:user_id>', methods=['GET'])
 @login_required
-def user_delete(id):
-    pass
+def user_delete(user_id):
+    if request.method == 'DELETE':
+        user = MasterUser.query.filter_by(id=user_id).first()
+        db.session.delete(user)
+        db.session.commit()
+
+    return redirect(url_for('master.user_list'))
