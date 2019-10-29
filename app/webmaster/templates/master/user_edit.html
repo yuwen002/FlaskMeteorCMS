@@ -1,0 +1,87 @@
+{% extends '_layout/_base.html' %}
+
+{% block title %}用户编辑{% endblock %}
+{% block keywords %}用户编辑{% endblock %}
+{% block description %}用户编辑{% endblock %}
+{% block body %}
+    <body data-type="widgets">
+    {% include '_layout/_theme_js.html' %}
+    <div class="am-g tpl-g">
+        <!-- 头部 -->
+        {% include '_layout/_header.html' %}
+        <!-- 风格切换 -->
+        {% include '_layout/_theme_code.html' %}
+        <!-- 侧边导航栏 -->
+        {% include '_layout/_left_nav.html' %}
+
+        <!-- 内容区域 -->
+        <div class="tpl-content-wrapper">
+
+            <div class="container-fluid am-cf">
+                <div class="row">
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 用户编辑 <small>User Edits </small></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row-content am-cf">
+
+
+
+                <div class="row">
+
+                    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+                        <div class="widget am-cf">
+                            <div class="widget-head am-cf">
+                                <div class="widget-title am-fl">边框表单</div>
+                            </div>
+                            <div class="widget-body am-fr">
+                                {% from '_layout/_form_errors.html' import errors_info %}
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('master.user_edit', user_id=user_id) }}">
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">用户名</label>
+                                        <div class="am-u-sm-9">
+                                            {{ form.username(class="tpl-form-input", placeholder="请输入用户名", readonly="readonly") }}
+                                            {{ errors_info(form.username.errors) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">邮箱</label>
+                                        <div class="am-u-sm-9">
+                                            {{ form.email(class="tpl-form-input", placeholder="请输入用户邮箱") }}
+                                            {{ errors_info(form.email.errors) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <label for="user-name" class="am-u-sm-3 am-form-label">用户密码</label>
+                                        <div class="am-u-sm-9">
+                                            {{ form.password(class="tpl-form-input", placeholder="请输入用户密码") }}
+                                            <small>如需更改密码请填写6~32位密码</small>
+                                            {{ errors_info(form.password.errors) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="am-form-group">
+                                        <div class="am-u-sm-9 am-u-sm-push-3">
+                                            {{ form.hidden_tag() }}
+                                            <button type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    {% include '_layout/_footer_js.html' %}
+    </body>
+{% endblock %}

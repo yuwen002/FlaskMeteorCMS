@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, redirect, url_for, flash, request
 from flask_login import login_user, login_required, logout_user, current_user
 from app.webmaster import master_blueprint
-from app.webmaster.forms.master import MasterLoginForm, RegisterUserForm, ModifyUserInfoForm, ModifyUserPasswordForm
+from app.webmaster.forms.master import MasterLoginForm, RegisterUserForm, ModifyUserInfoForm, ModifyUserPasswordForm, ModifyRegUserInfoForm
 from app.models import MasterUser
 from app.extensions import db
 
@@ -123,10 +123,19 @@ def user_list():
     return render_template('master/user_list.html', users=users, paginate=paginate);
 
 
-@master_blueprint.route('/user_edit/<int:id>', methods=['DELETE'])
+@master_blueprint.route('/user_edit/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def user_edit(id):
-    pass
+def user_edit(user_id):
+    user = MasterUser.query.get_or_404(user_id)
+    # form初始化
+    form = ModifyRegUserInfoForm()
+    form.email.data = user.email
+    form.username.data = user.username
+
+    if form.validate_on_submit():
+        return 'aaaaaaaaaa'
+
+    return render_template('master/user_edit.html', user_id=user_id, form=form)
 
 
 # 删除用户信息
@@ -134,7 +143,7 @@ def user_edit(id):
 @login_required
 def user_delete(user_id):
     if request.method == 'DELETE':
-        user = MasterUser.query.filter_by(id=user_id).first()
+        user = MasterUser.query.get_or_404(user_id)
         db.session.delete(user)
         db.session.commit()
 

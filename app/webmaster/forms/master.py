@@ -22,7 +22,6 @@ class RegisterUserForm(FlaskForm):
     # 验证用户名是否存在
     def validate_username(self, username):
         master_user = MasterUser.query.filter_by(username=username.data).first()
-        print(master_user)
         if master_user:
             raise ValidationError('用户名已注册，请选用其它名称')
 
@@ -52,7 +51,14 @@ class ModifyUserPasswordForm(FlaskForm):
     confirm_new_password = PasswordField('确认密码', validators=[DataRequired(message='确认密码不能为空'), EqualTo('new_password', message='两次密码不一致')])
 
 
-# 用户基本信息修改
-class ModifyUserInfoForm(FlaskForm):
-    password = PasswordField('密码', validators=[DataRequired(message='密码不能为空')])
+# 注册用户基本信息修改
+class ModifyRegUserInfoForm(FlaskForm):
+    username = StringField('用户名')
+    password = PasswordField('密码')
     email = StringField('邮箱', validators=[DataRequired(message='邮箱不能为空'), Email(message='无效的邮箱格式')])
+
+    def validate_password(self, password):
+        if password.data:
+            l = len(password.data)
+            if l > 32 or l < 6:
+                raise ValidationError('密码长度在6~32位之间')
