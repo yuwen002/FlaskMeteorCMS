@@ -133,7 +133,13 @@ def user_edit(user_id):
     form.username.data = user.username
 
     if form.validate_on_submit():
-        return 'aaaaaaaaaa'
+        user.email = form.email.data
+        if form.email.data:
+            user.password = form.password.data
+
+        db.session.add(user)
+        db.session.commit()
+        redirect(url_for('master.user_list'))
 
     return render_template('master/user_edit.html', user_id=user_id, form=form)
 
@@ -142,9 +148,8 @@ def user_edit(user_id):
 @master_blueprint.route('/user_delete/<int:user_id>', methods=['GET'])
 @login_required
 def user_delete(user_id):
-    if request.method == 'DELETE':
-        user = MasterUser.query.get_or_404(user_id)
-        db.session.delete(user)
-        db.session.commit()
+    user = MasterUser.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
 
     return redirect(url_for('master.user_list'))
