@@ -1,6 +1,6 @@
 # coding: UTF-8
 from datetime import datetime
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, session
 from flask_login import login_user, login_required, logout_user, current_user
 from app.webmaster import master_blueprint
 from app.webmaster.forms.master import MasterLoginForm, RegisterUserForm, ModifyUserInfoForm, ModifyUserPasswordForm, ModifyRegUserInfoForm
@@ -116,10 +116,10 @@ def modify_user_password():
 @login_required
 def user_list():
     page = request.args.get('page', 1, type=int)
-    limit = 20
+    limit = 2
     paginate = MasterUser.query.filter(MasterUser.username != 'webmaster').order_by(MasterUser.id.desc()).paginate(page, per_page=limit, error_out=False)
     users = paginate.items
-
+    session['user_list_path'] = request.full_path
     return render_template('master/user_list.html', users=users, paginate=paginate);
 
 
@@ -133,13 +133,23 @@ def user_edit(user_id):
     form.username.data = user.username
 
     if form.validate_on_submit():
-        user.email = form.email.data
-        if form.email.data:
-            user.password = form.password.data
+        u_info = MasterUser.query.filter(MasterUser.email == form.email.data, MasterUser.id != user_id).first_or_404()
+        if u_info:
+            user.email = form.email.data
 
-        db.session.add(user)
-        db.session.commit()
-        redirect(url_for('master.user_list'))
+            if form.password.data:
+                user.password = form.password.data
+
+            db.session.add(user)
+            db.session.commit()
+
+            path = session.get('user_list_path')
+            if path:
+                endpoint = path
+            else:
+                endpoint = url_for('master.user_list')
+
+            return redirect(endpoint)
 
     return render_template('master/user_edit.html', user_id=user_id, form=form)
 
