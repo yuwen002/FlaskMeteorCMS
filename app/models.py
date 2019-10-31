@@ -1,6 +1,7 @@
 # coding: UTF-8
 from datetime import datetime
 from flask_login import UserMixin
+from sqlalchemy.orm import backref
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.extensions import db
 
@@ -34,10 +35,27 @@ class MasterUser(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
 
+roles_permissions = db.Table(
+    'roles_permissions',
+    db.Column('role_id', db.Integer, db.ForeignKey('master_roles.id')),
+    db.Column('permission_id', db.Integer, db.ForeignKey('master_permission.id'))
+)
+
+
+# 用户角色
 class Role(db.Model):
     """用户角色"""
     __tablename__ = 'master_roles'
     id = db.Column(db.Integer, primary_key=True, comment='自增ID')
     name = db.Column(db.String(20), unique=True, nullable=False)
     remark = db.Column(db.String(200))
-    roles = db.relationship('MasterUser', backref='roles', lazy='dynamic')
+    users = db.relationship('MasterUser', backref='roles', lazy='dynamic')
+    roles_to_permissions = db.relationship('Permission', secondary=roles_permissions, backref='permissions_to_roles', lazy='dynamic')
+
+
+# 权限数据
+class Permission(db.Model):
+    __tablename__ = 'master_permission'
+    id = db.Column(db.Integer, primary_key=True, comment='自增ID')
+    name = db.Column(db.String(20), unique=True)
+    remark = db.Column(db.String(200), comment='权限名称备注')

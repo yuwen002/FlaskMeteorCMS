@@ -33,7 +33,7 @@ def register():
         # post 字段
         username = form.username.data
         password = form.password.data
-        email = form.email.data
+        email = form.email.data.lower()
 
         # 注册用户数据写入
         master_user = MasterUser(username=username, password=password, email=email)
