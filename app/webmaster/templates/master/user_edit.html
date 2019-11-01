@@ -53,6 +53,7 @@
                                         <div class="am-u-sm-9">
                                             {{ form.email(class="tpl-form-input", placeholder="请输入用户邮箱") }}
                                             {{ errors_info(form.email.errors) }}
+                                            {{ errors_info(get_flashed_messages()) }}
                                         </div>
                                     </div>
 

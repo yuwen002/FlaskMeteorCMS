@@ -135,7 +135,6 @@ def user_edit(user_id):
 
         if u_info is None:
             user.email = form.email.data
-            print(user.email)
             if form.password.data:
                 user.password = form.password.data
 
@@ -148,7 +147,10 @@ def user_edit(user_id):
                 endpoint = url_for('master.user_list')
 
             return redirect(endpoint)
+        else:
+            flash('邮箱已存在')
 
+    #input value赋值
     form.email.data = user.email
     form.username.data = user.username
 
