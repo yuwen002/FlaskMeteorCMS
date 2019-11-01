@@ -41,7 +41,7 @@
                                 {% from '_layout/_form_errors.html' import errors_info %}
                                 <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('master.user_edit', user_id=user_id) }}">
                                     <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">用户名</label>
+                                        <label for="username" class="am-u-sm-3 am-form-label">用户名</label>
                                         <div class="am-u-sm-9">
                                             {{ form.username(class="tpl-form-input", placeholder="请输入用户名", readonly="readonly") }}
                                             {{ errors_info(form.username.errors) }}
@@ -49,7 +49,7 @@
                                     </div>
 
                                     <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">邮箱</label>
+                                        <label for="email" class="am-u-sm-3 am-form-label">邮箱</label>
                                         <div class="am-u-sm-9">
                                             {{ form.email(class="tpl-form-input", placeholder="请输入用户邮箱") }}
                                             {{ errors_info(form.email.errors) }}
@@ -57,7 +57,7 @@
                                     </div>
 
                                     <div class="am-form-group">
-                                        <label for="user-name" class="am-u-sm-3 am-form-label">用户密码</label>
+                                        <label for="password" class="am-u-sm-3 am-form-label">用户密码</label>
                                         <div class="am-u-sm-9">
                                             {{ form.password(class="tpl-form-input", placeholder="请输入用户密码") }}
                                             <small>如需更改密码请填写6~32位密码</small>

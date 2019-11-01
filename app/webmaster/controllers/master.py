@@ -129,18 +129,16 @@ def user_edit(user_id):
     user = MasterUser.query.get_or_404(user_id)
     # form初始化
     form = ModifyRegUserInfoForm()
-    form.email.data = user.email
-    form.username.data = user.username
 
     if form.validate_on_submit():
-        u_info = MasterUser.query.filter(MasterUser.email == form.email.data, MasterUser.id != user_id).first_or_404()
-        if u_info:
-            user.email = form.email.data
+        u_info = MasterUser.query.filter(MasterUser.email == form.email.data, MasterUser.id != user_id).first()
 
+        if u_info is None:
+            user.email = form.email.data
+            print(user.email)
             if form.password.data:
                 user.password = form.password.data
 
-            db.session.add(user)
             db.session.commit()
 
             path = session.get('user_list_path')
@@ -150,6 +148,9 @@ def user_edit(user_id):
                 endpoint = url_for('master.user_list')
 
             return redirect(endpoint)
+
+    form.email.data = user.email
+    form.username.data = user.username
 
     return render_template('master/user_edit.html', user_id=user_id, form=form)
 
