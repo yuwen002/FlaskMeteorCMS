@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from app.config import config
 from app.extensions import db, login_manager, migrate
-from app.webmaster import master_blueprint
+from app.webmaster import master_blueprint, singlepage_blueprint
 from app.models import MasterUser
 
 
@@ -35,6 +35,7 @@ def register_extensions(app):
 # 注册蓝本
 def register_blueprints(app):
     app.register_blueprint(master_blueprint)
+    app.register_blueprint(singlepage_blueprint)
 
 
 def register_shell_context(app):

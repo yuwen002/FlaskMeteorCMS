@@ -8,4 +8,11 @@ master_blueprint = Blueprint(
     template_folder='./templates',
 )
 
-from app.webmaster.controllers import master, errors
+singlepage_blueprint = Blueprint(
+    'singlepage',
+    __name__,
+    url_prefix='/master/singlepage',
+    template_folder='./templates'
+)
+
+from app.webmaster.controllers import master, singlepage, errors

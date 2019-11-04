@@ -61,6 +61,26 @@ class Permission(db.Model):
     remark = db.Column(db.String(200), comment='权限名称备注')
 
 
+# 单页数据
+class SingePage(db.Model):
+    __tablename__ = 'single_pages'
+    id = db.Column(db.Integer, primary_key=True, comment='自增ID')
+    single_category_id = db.Column(db.Integer, db.ForeignKey('single_category.id'), default=0, comment='单页数据分类ID')
+    title = db.Column(db.String(64), comment='单页文章标题')
+    content = db.Column(db.Text, comment='单页内容')
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())
+
+
+# 单页数据分类
+class SingleCategory(db.Model):
+    __tablename__ = 'single_category'
+    id = db.Column(db.Integer, primary_key=True, comment='自增ID')
+    name = db.Column(db.String(32), unique=True, comment='分类名称')
+    description = db.Column(db.String(128), comment='分类描述')
+    img = db.Column(db.String(200), comment='分类图片')
+
+
 # 新闻分类
 class Category(db.Model):
     """
