@@ -22,11 +22,11 @@
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                         <div class="widget am-cf">
                             <div class="widget-head am-cf">
-                                <div class="widget-title am-fl">边框表单</div>
+                                <div class="widget-title am-fl">添加单页分类</div>
                             </div>
                             <div class="widget-body am-fr">
                                 {% from '_layout/_form_errors.html' import errors_info %}
-                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('singlepage.category_add') }}">
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('singlepage.category_add') }}" enctype="multipart/form-data">
                                     <div class="am-form-group">
                                         <label for="username" class="am-u-sm-3 am-form-label">用户名</label>
                                         <div class="am-u-sm-9">
