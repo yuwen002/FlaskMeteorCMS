@@ -22,7 +22,7 @@ def category_add():
         # 处理上传文件路径
         today_path = datetime.now().strftime("%Y%m%d");
         img_name = random_filename(img.filename)
-        img_path = os.path.join(today_path, img_name)
+        img_path = os.path.join(today_path, img_name).replace('\\', '/')
         upload_path = os.path.join(current_app.config['UPLOAD_PATH'], today_path)
         mkdir(upload_path)
         upload_path = os.path.join(upload_path, img_name)

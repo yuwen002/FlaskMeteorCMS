@@ -42,7 +42,7 @@
                                             <td>{{ category.id }}</td>
                                             <td>{{ category.name }}</td>
                                             <td>{{ category.description }}</td>
-                                            <td><img src="{{ url_for('get_file', filename=category.img) }}" ></td>
+                                            <td><img src="{{ url_for('get_file', filename=category.img) }}" >{{ category.img }}</td>
                                             <td>
                                                 <div class="tpl-table-black-operation">
                                                     <a href="{{ url_for('master.user_edit', user_id=category.id) }}">

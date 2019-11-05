@@ -1,4 +1,5 @@
 # coding: UTF-8
+import os
 from flask import current_app, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -23,5 +24,4 @@ def load_user(user_id):
 def get_file_init(app):
     @app.route('/uploads/<path:filename>')
     def get_file(filename):
-        print(current_app.config['UPLOAD_PATH'], filename);
         return send_from_directory(current_app.config['UPLOAD_PATH'], filename)
