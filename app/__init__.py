@@ -2,7 +2,7 @@
 import os
 from flask import Flask
 from app.config import config
-from app.extensions import db, login_manager, migrate
+from app.extensions import db, login_manager, migrate, get_file_init
 from app.webmaster import master_blueprint, singlepage_blueprint
 from app.models import MasterUser
 
@@ -30,6 +30,7 @@ def register_extensions(app):
     db.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
+    get_file_init(app)
 
 
 # 注册蓝本

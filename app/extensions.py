@@ -1,4 +1,5 @@
 # coding: UTF-8
+from flask import current_app, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -17,3 +18,10 @@ login_manager.session_protection = 'strong'
 def load_user(user_id):
     from app.models import MasterUser
     return MasterUser.query.get(int(user_id))
+
+
+def get_file_init(app):
+    @app.route('/uploads/<path:filename>')
+    def get_file(filename):
+        print(current_app.config['UPLOAD_PATH'], filename);
+        return send_from_directory(current_app.config['UPLOAD_PATH'], filename)

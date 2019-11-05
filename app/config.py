@@ -14,6 +14,8 @@ else:
 
 class BaseConfig(object):
     SECRET_KEY = 'SHERRY_LIUXINGYU_CMS'
+    MAX_CONTENT_LENGTH = 10 * 1024 * 1024
+    UPLOAD_PATH = os.path.join(basedir, 'uploads')
 
     @staticmethod
     def init_app(app):

@@ -116,7 +116,7 @@ def modify_user_password():
 @login_required
 def user_list():
     page = request.args.get('page', 1, type=int)
-    limit = 2
+    limit = 20
     paginate = MasterUser.query.filter(MasterUser.username != 'webmaster').order_by(MasterUser.id.desc()).paginate(page, per_page=limit, error_out=False)
     users = paginate.items
     session['user_list_path'] = request.full_path
