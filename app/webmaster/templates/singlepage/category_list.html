@@ -17,6 +17,7 @@
 
 
 
+
                 <div class="row">
 
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -42,13 +43,13 @@
                                             <td>{{ category.id }}</td>
                                             <td>{{ category.name }}</td>
                                             <td>{{ category.description }}</td>
-                                            <td><img src="{{ url_for('get_file', filename=category.img) }}" >{{ category.img }}</td>
+                                            <td><img src="{{ url_for('get_file', filename=category.img) }}" width="150px"></td>
                                             <td>
                                                 <div class="tpl-table-black-operation">
-                                                    <a href="{{ url_for('master.user_edit', user_id=category.id) }}">
+                                                    <a href="{{ url_for('singlepage.category_edit', category_id=category.id) }}">
                                                         <i class="am-icon-pencil"></i> 编辑
                                                     </a>
-                                                    <a href="{{ url_for('master.user_delete', user_id=category.id) }}" onclick="return user_delete();" class="tpl-table-black-operation-del">
+                                                    <a href="{{ url_for('singlepage.category_delete', category_id=category.id) }}" onclick="return category_delete();" class="tpl-table-black-operation-del">
                                                         <i class="am-icon-trash"></i> 删除
                                                     </a>
                                                 </div>
@@ -68,4 +69,18 @@
 
 
         </div>
+
+{% endblock %}
+{% block script %}
+    <script type="text/javascript">
+        function category_delete() {
+            let msg = "您真的确定要删除吗？\n\n请确认！";
+
+            if (confirm(msg) == true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
 {% endblock %}
