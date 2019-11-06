@@ -20,7 +20,7 @@ def category_add():
         img = form.img.data
         if img:
             # 处理上传文件路径
-            today_path = datetime.now().strftime("%Y%m%d");
+            today_path = datetime.now().strftime("%Y%m%d")
             img_name = random_filename(img.filename)
             img_path = os.path.join(today_path, img_name).replace('\\', '/')
             upload_path = os.path.join(current_app.config['UPLOAD_PATH'], today_path)
@@ -102,7 +102,7 @@ def category_delete(category_id):
 
 @singlepage_blueprint.route('/singlepage_add')
 def singlepage_add():
-    pass
+    return render_template('singlepage/singlepage_add.html')
 
 
 @singlepage_blueprint.route('/singlepage_list')

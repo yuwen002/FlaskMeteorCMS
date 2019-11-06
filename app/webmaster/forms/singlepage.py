@@ -1,4 +1,5 @@
 # coding: UTF-8
+from flask_ckeditor import CKEditorField
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from wtforms import StringField
@@ -18,3 +19,7 @@ class SinglepageCategoryForm(SinglepageCategoryEditForm):
         if category:
             raise ValidationError('分类名称已存在')
 
+
+class SinglepageForm(FlaskForm):
+    title = StringField('标题', validators=[DataRequired])
+    content = CKEditorField('内容')
