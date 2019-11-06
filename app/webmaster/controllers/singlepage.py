@@ -97,4 +97,24 @@ def category_delete(category_id):
     db.session.delete(category)
     db.session.commit()
 
-    redirect(url_for('singlepage.category_list'))
+    return redirect(url_for('singlepage.category_list'))
+
+
+@singlepage_blueprint.route('/singlepage_add')
+def singlepage_add():
+    pass
+
+
+@singlepage_blueprint.route('/singlepage_list')
+def singlepage_list():
+    pass
+
+
+@singlepage_blueprint.route('/singlepage_edit/<int:single_id>')
+def singlepage_edit(single_id):
+    pass
+
+
+@singlepage_blueprint.route('/singlepage_delete/<int:single_id>')
+def singlepage_delete(single_id):
+    pass
