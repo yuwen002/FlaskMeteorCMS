@@ -5,9 +5,9 @@ from wtforms.validators import DataRequired
 from app.models import Category
 
 class ArticleCategoryForm(FlaskForm):
-    name = StringField(u'分类名称', validators=[DataRequired(message=u'分类名称不能为空')])
-    sort = StringField(u'排序')
-    fid = SelectField(u'上级分类')
+    name = StringField('分类名称', validators=[DataRequired(message=u'分类名称不能为空')])
+    sort = StringField('排序')
+    fid = SelectField('上级分类')
 
     def __init__(self, *args, **kwargs):
         super(ArticleCategoryForm, self).__init__(*args, **kwargs)

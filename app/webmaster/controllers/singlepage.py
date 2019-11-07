@@ -6,10 +6,8 @@ from flask_login import login_required
 from app.webmaster import singlepage_blueprint
 from app.webmaster.forms.singlepage import SinglepageCategoryForm, SinglepageCategoryEditForm, SinglepageForm
 from app.helpers import random_filename, mkdir
-from app.models import SingleCategory
+from app.models import SingleCategory, SingePage
 from app.extensions import db
-
-
 
 
 @singlepage_blueprint.route('/category_add', methods=['GET', 'POST'])
@@ -109,6 +107,17 @@ def category_delete(category_id):
 @login_required
 def singlepage_add():
     form = SinglepageForm()
+
+    if form.validate_on_submit():
+        title = form.title.data
+        content = form.content.data
+        single_category_id = form.single_category_id.data
+        single = SingePage(title=title, content=content, single_category_id=single_category_id)
+
+        db.session.add(single)
+        db.session.commit()
+        return redirect(url_for('singlepage.singlepage_list'))
+
     return render_template('singlepage/singlepage_add.html', form=form)
 
 
