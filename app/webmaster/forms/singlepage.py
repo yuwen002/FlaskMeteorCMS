@@ -21,5 +21,5 @@ class SinglepageCategoryForm(SinglepageCategoryEditForm):
 
 
 class SinglepageForm(FlaskForm):
-    title = StringField('标题', validators=[DataRequired])
+    title = StringField('标题', validators=[DataRequired(message='标题不能为空')])
     content = CKEditorField('内容')

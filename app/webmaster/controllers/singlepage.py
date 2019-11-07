@@ -2,8 +2,9 @@
 import os
 from datetime import datetime
 from flask import render_template, current_app, redirect,  url_for, request, session, flash
+from flask_login import login_required
 from app.webmaster import singlepage_blueprint
-from app.webmaster.forms.singlepage import SinglepageCategoryForm, SinglepageCategoryEditForm
+from app.webmaster.forms.singlepage import SinglepageCategoryForm, SinglepageCategoryEditForm, SinglepageForm
 from app.helpers import random_filename, mkdir
 from app.models import SingleCategory
 from app.extensions import db
@@ -12,6 +13,7 @@ from app.extensions import db
 
 
 @singlepage_blueprint.route('/category_add', methods=['GET', 'POST'])
+@login_required
 def category_add():
     form = SinglepageCategoryForm()
     if form.validate_on_submit():
@@ -40,6 +42,7 @@ def category_add():
 
 
 @singlepage_blueprint.route('/category_list')
+@login_required
 def category_list():
     page = request.args.get('page', 1, type=int)
     limit = 20
@@ -51,6 +54,7 @@ def category_list():
 
 
 @singlepage_blueprint.route('/category_edit/<int:category_id>', methods=['GET', 'POST'])
+@login_required
 def category_edit(category_id):
     category = SingleCategory.query.get_or_404(category_id)
     form = SinglepageCategoryEditForm()
@@ -92,6 +96,7 @@ def category_edit(category_id):
 
 
 @singlepage_blueprint.route('/category_delete/<int:category_id>')
+@login_required
 def category_delete(category_id):
     category = SingleCategory.query.get_or_404(category_id)
     db.session.delete(category)
@@ -101,20 +106,25 @@ def category_delete(category_id):
 
 
 @singlepage_blueprint.route('/singlepage_add')
+@login_required
 def singlepage_add():
-    return render_template('singlepage/singlepage_add.html')
+    form = SinglepageForm()
+    return render_template('singlepage/singlepage_add.html', form=form)
 
 
 @singlepage_blueprint.route('/singlepage_list')
+@login_required
 def singlepage_list():
     pass
 
 
 @singlepage_blueprint.route('/singlepage_edit/<int:single_id>')
+@login_required
 def singlepage_edit(single_id):
     pass
 
 
 @singlepage_blueprint.route('/singlepage_delete/<int:single_id>')
+@login_required
 def singlepage_delete(single_id):
     pass

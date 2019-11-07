@@ -28,27 +28,18 @@
                                 {% from '_layout/_form_errors.html' import errors_info %}
                                 <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('singlepage.category_add') }}" enctype="multipart/form-data">
                                     <div class="am-form-group">
-                                        <label for="name" class="am-u-sm-3 am-form-label">分类名称</label>
+                                        <label for="name" class="am-u-sm-3 am-form-label">标题</label>
                                         <div class="am-u-sm-9">
-                                            {{ form.name(class="tpl-form-input", placeholder="请输入分类名称") }}
-                                            {{ errors_info(form.name.errors) }}
+                                            {{ form.title(class="tpl-form-input", placeholder="请输入标题") }}
+                                            {{ errors_info(form.title.errors) }}
                                         </div>
                                     </div>
 
                                     <div class="am-form-group">
                                         <label for="description" class="am-u-sm-3 am-form-label">分类描述</label>
                                         <div class="am-u-sm-9">
-                                            {{ form.description(class="tpl-form-input", placeholder="请输入分类描述") }}
-                                            {{ errors_info(form.description.errors) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="am-form-group">
-                                        <label for="img" class="am-u-sm-3 am-form-label">分类图片</label>
-                                        <div class="am-u-sm-9">
-                                            {{ form.img(class="tpl-form-input") }}
-                                            <small>请选择'jpg', 'jpeg', 'gif', 'png'图片</small>
-                                            {{ errors_info(form.img.errors) }}
+                                            {{ form.content() }}
+                                            {{ errors_info(form.content.errors) }}
                                         </div>
                                     </div>
 
@@ -67,4 +58,8 @@
 
 
         </div>
+{% endblock %}
+{% block script %}
+    {{ ckeditor.load() }}
+    {{ ckeditor.config('content') }}
 {% endblock %}

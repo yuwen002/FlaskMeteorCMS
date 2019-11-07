@@ -14,8 +14,21 @@ else:
 
 class BaseConfig(object):
     SECRET_KEY = 'SHERRY_LIUXINGYU_CMS'
+
+    # 上传文件大小
     MAX_CONTENT_LENGTH = 10 * 1024 * 1024
+    # 上传路径
     UPLOAD_PATH = os.path.join(basedir, 'uploads')
+
+    # CKEditor配置
+    # CKEditor包类型，可选值为 basic、standard、full
+    CKEDITOR_SERVE_LOCAL = True
+    CKEDITOR_PKG_TYPE = 'standard'
+    CKEDITOR_LANGUAGE = 'zh-cn'
+    CKEDITOR_FILE_UPLOADER = '/ckupload/'
+    CKEDITOR_HEIGHT = '500'
+    CKEDITOR_WIDTH = '0'
+
 
     @staticmethod
     def init_app(app):
