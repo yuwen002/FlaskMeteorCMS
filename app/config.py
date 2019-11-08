@@ -25,7 +25,7 @@ class BaseConfig(object):
     CKEDITOR_SERVE_LOCAL = True
     CKEDITOR_PKG_TYPE = 'standard'
     CKEDITOR_LANGUAGE = 'zh-cn'
-    CKEDITOR_FILE_UPLOADER = '/ckupload/'
+    CKEDITOR_FILE_UPLOADER = 'master.ckupload'
     CKEDITOR_HEIGHT = '500'
     CKEDITOR_WIDTH = '0'
 

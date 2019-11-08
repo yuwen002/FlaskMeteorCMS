@@ -1,11 +1,14 @@
 # coding: UTF-8
+import os
 from datetime import datetime
-from flask import render_template, redirect, url_for, flash, request, session
+from flask import render_template, redirect, url_for, flash, request, session, current_app
 from flask_login import login_user, login_required, logout_user, current_user
+from flask_ckeditor import upload_success, upload_fail
 from app.webmaster import master_blueprint
 from app.webmaster.forms.master import MasterLoginForm, RegisterUserForm, ModifyUserInfoForm, ModifyUserPasswordForm, ModifyRegUserInfoForm
 from app.models import MasterUser
 from app.extensions import db
+from app.helpers import allowed_file, random_filename, mkdir
 
 
 # 后台管理员登入
@@ -166,3 +169,21 @@ def user_delete(user_id):
     db.session.commit()
 
     return redirect(url_for('master.user_list'))
+
+
+@master_blueprint.route('/ckupload', methods=['POST'])
+def ckupload():
+    f = request.files.get('upload')
+    if not allowed_file(f.filename):
+        return upload_fail('请上传正确类型')
+
+    today_path = datetime.now().strftime("%Y%m%d")
+    img_name = random_filename(f.filename)
+    img_path = os.path.join(today_path, img_name).replace('\\', '/')
+    upload_path = os.path.join(current_app.config['UPLOAD_PATH'], today_path)
+    mkdir(upload_path)
+    upload_path = os.path.join(upload_path, img_name)
+    # 上传文件
+    f.save(upload_path)
+    url = url_for('get_file', filename=img_path)
+    return upload_success(url, img_name)

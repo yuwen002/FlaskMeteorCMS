@@ -19,3 +19,8 @@ def mkdir(path):
         return True
 
     return False
+
+
+# 验证上传文件类型
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ['png', 'jpg', 'jpeg', 'gif', 'txt']
