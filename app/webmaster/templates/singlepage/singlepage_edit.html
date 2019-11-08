@@ -7,8 +7,8 @@
     <div class="container-fluid am-cf">
         <div class="row">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 单页分类添加
-                    <small>SinglePage Add</small>
+                <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 单页分类编辑
+                    <small>SinglePage Edit</small>
                 </div>
             </div>
         </div>
@@ -23,11 +23,11 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
                 <div class="widget am-cf">
                     <div class="widget-head am-cf">
-                        <div class="widget-title am-fl">添加单页分类</div>
+                        <div class="widget-title am-fl">修改单页分类</div>
                     </div>
                     <div class="widget-body am-fr">
                         {% from '_layout/_form_errors.html' import errors_info %}
-                        <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('singlepage.singlepage_add') }}" enctype="multipart/form-data">
+                        <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('singlepage.singlepage_edit', single_id=singlepage.id) }}" enctype="multipart/form-data">
                             <div class="am-form-group">
                                 <label for="name" class="am-u-sm-3 am-form-label">标题</label>
                                 <div class="am-u-sm-9">

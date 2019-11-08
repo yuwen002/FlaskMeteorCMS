@@ -24,6 +24,7 @@ class SinglepageForm(FlaskForm):
     title = StringField('标题', validators=[DataRequired(message='标题不能为空')])
     single_category_id = SelectField(
         '单页分类',
+        coerce = int,
         render_kw = {
             "data-am-selected": "{btnSize:'sm'}"
         }

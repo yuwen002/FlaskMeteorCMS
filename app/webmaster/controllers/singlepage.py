@@ -133,13 +133,32 @@ def singlepage_list():
     return render_template('/singlepage/singlepage_list.html', singlepages=singlepages, paginate=paginate)
 
 
-@singlepage_blueprint.route('/singlepage_edit/<int:single_id>')
+@singlepage_blueprint.route('/singlepage_edit/<int:single_id>', methods=['GET', 'POST'])
 @login_required
 def singlepage_edit(single_id):
-    pass
+    singlepage = SingePage.query.get_or_404(single_id)
+    form = SinglepageForm()
+
+    if form.validate_on_submit():
+        singlepage.title = form.title.data
+        singlepage.content = form.content.data
+        singlepage.single_category_id = form.single_category_id.data
+
+        db.session.commit()
+        return redirect(url_for('singlepage.singlepage_list'))
+
+    form.title.data = singlepage.title
+    form.content.data = singlepage.content
+    form.single_category_id.data = singlepage.single_category_id
+
+    return render_template('singlepage/singlepage_edit.html', form=form, singlepage=singlepage)
 
 
 @singlepage_blueprint.route('/singlepage_delete/<int:single_id>')
 @login_required
 def singlepage_delete(single_id):
-    pass
+    singlepage = SingePage.query.get_or_404(single_id)
+    db.session.delete(singlepage)
+    db.session.commit()
+
+    return redirect(url_for('singlepage.singlepage_list'))

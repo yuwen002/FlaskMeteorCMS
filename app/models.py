@@ -79,6 +79,7 @@ class SingleCategory(db.Model):
     name = db.Column(db.String(32), unique=True, comment='分类名称')
     description = db.Column(db.String(128), comment='分类描述')
     img = db.Column(db.String(200), comment='分类图片')
+    singlepages = db.relationship('SingePage', backref='single_categorys')
 
 
 # 新闻分类
