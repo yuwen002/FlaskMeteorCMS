@@ -103,7 +103,7 @@ def category_delete(category_id):
     return redirect(url_for('singlepage.category_list'))
 
 
-@singlepage_blueprint.route('/singlepage_add')
+@singlepage_blueprint.route('/singlepage_add', methods=['GET', 'POST'])
 @login_required
 def singlepage_add():
     form = SinglepageForm()
@@ -124,7 +124,13 @@ def singlepage_add():
 @singlepage_blueprint.route('/singlepage_list')
 @login_required
 def singlepage_list():
-    pass
+    page = request.args.get('page', 1, type=int)
+    limit = 20
+
+    paginate = SingePage.query.order_by(SingePage.id.desc()).paginate(page, per_page=limit, error_out=False)
+    singlepages = paginate.items
+
+    return render_template('/singlepage/singlepage_list.html', singlepages=singlepages, paginate=paginate)
 
 
 @singlepage_blueprint.route('/singlepage_edit/<int:single_id>')
