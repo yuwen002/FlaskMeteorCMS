@@ -15,4 +15,16 @@ singlepage_blueprint = Blueprint(
     template_folder='./templates'
 )
 
-from app.webmaster.controllers import master, singlepage, errors
+article_blueprint = Blueprint(
+    'article',
+    __name__,
+    url_prefix = '/master/article',
+    template_folder='./templates'
+)
+
+from app.webmaster.controllers import (
+    master,
+    singlepage,
+    article,
+    errors
+)

@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from app.config import config
 from app.extensions import db, login_manager, migrate, get_file_init, ckeditor
-from app.webmaster import master_blueprint, singlepage_blueprint
+from app.webmaster import master_blueprint, singlepage_blueprint, article_blueprint
 from app.models import MasterUser
 
 
@@ -38,6 +38,7 @@ def register_extensions(app):
 def register_blueprints(app):
     app.register_blueprint(master_blueprint)
     app.register_blueprint(singlepage_blueprint)
+    app.register_blueprint(article_blueprint)
 
 
 def register_shell_context(app):
