@@ -11,5 +11,12 @@ from app.webmaster.forms.article import ArticleCategoryForm
 def category_list():
     categoryAll = Category()
     resCategory = categoryAll.get_category_all()
+
+    return render_template('article/category_show.html', res_category=resCategory)
+
+
+@article_blueprint.route('/category_add')
+@login_required
+def category_add():
     form = ArticleCategoryForm()
-    return render_template('article/category_show.html', form=form, res_category=resCategory)
+    return render_template('article/category_add.html', form=form)

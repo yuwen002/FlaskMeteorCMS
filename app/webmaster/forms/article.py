@@ -1,5 +1,6 @@
 # coding: UTF-8
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileField
 from wtforms import StringField, SelectField
 from wtforms.validators import DataRequired
 from app.models import Category
@@ -7,7 +8,14 @@ from app.models import Category
 class ArticleCategoryForm(FlaskForm):
     name = StringField('分类名称', validators=[DataRequired(message=u'分类名称不能为空')])
     sort = StringField('排序')
-    fid = SelectField('上级分类')
+    fid = SelectField(
+        '上级分类',
+        coerce=int,
+        render_kw={
+            "data-am-selected": "{btnSize:'sm'}"
+        }
+    )
+    img = FileField('分类图片', validators=[FileAllowed(['jpg', 'jpeg', 'gif', 'png'], message='上传类型不正确')])
 
     def __init__(self, *args, **kwargs):
         super(ArticleCategoryForm, self).__init__(*args, **kwargs)

@@ -92,6 +92,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     fid = db.Column(db.Integer, default=0)
     name = db.Column(db.String(32), unique=True)
+    img = db.Column(db.String(200), comment='分类图片')
     lft = db.Column(db.Integer, default=0)
     rgt = db.Column(db.Integer, default=0)
     sort = db.Column(db.Integer, default=0)
@@ -99,6 +100,7 @@ class Category(db.Model):
     depth = db.Column(db.SmallInteger, default=0)
     input_time = db.Column(db.DateTime, default=datetime.now())
     update_time = db.Column(db.DateTime, default=datetime.now())
+    # news = db.relationship()
 
     def __repr__(self):
         return "<Category %r>" % self.name
