@@ -83,7 +83,7 @@ class SingleCategory(db.Model):
 
 
 # 新闻分类
-class Category(db.Model):
+class ArticleCategory(db.Model):
     """
     新闻分类表
     左右无限分类
@@ -106,15 +106,15 @@ class Category(db.Model):
         return "<Category %r>" % self.name
 
     def get_category(self, id):
-        category = Category.query.get(id)
+        category = ArticleCategory.query.get(id)
         return category
 
-    def add_category(self, name, fid=0, sort=0):
+    def add_category(self, name, fid=0, sort=0, img=''):
         if int(fid) == 0:
             # 查询左值最小值如最小值为空进行顶级分类写入
-            left = db.session.query(func.min(Category.lft)).scalar()
+            left = db.session.query(func.min(ArticleCategory.lft)).scalar()
             if left is None:
-                category = Category(name=name, depth=0, lft=1, rgt=2)
+                category = ArticleCategory(name=name, depth=0, lft=1, rgt=2, img=img)
                 db.session.add(category)
                 db.session.commit()
                 return True
@@ -123,12 +123,11 @@ class Category(db.Model):
         else:
             # 获取父类分类基本信息
             category = self.get_category(fid)
-            print(category.rgt)
             if category is not None:
                 # 其它节点分类信息更新
-                new_category = Category(name=name, fid=fid, depth=category.depth + 1, lft=category.rgt, rgt=category.rgt + 1, sort=sort)
-                db.session.query(Category).filter(Category.lft > category.rgt).update({Category.lft: Category.lft + 2})
-                db.session.query(Category).filter(Category.rgt >= category.rgt).update({Category.rgt: Category.rgt + 2})
+                new_category = ArticleCategory(name=name, fid=fid, depth=category.depth + 1, lft=category.rgt, rgt=category.rgt + 1, sort=sort, img=img)
+                db.session.query(ArticleCategory).filter(ArticleCategory.lft > category.rgt).update({ArticleCategory.lft: ArticleCategory.lft + 2})
+                db.session.query(ArticleCategory).filter(ArticleCategory.rgt >= category.rgt).update({ArticleCategory.rgt: ArticleCategory.rgt + 2})
                 db.session.add(new_category)
                 db.session.commit()
                 return True
@@ -138,13 +137,13 @@ class Category(db.Model):
     def delete_category(self, id):
         category = self.get_category(id)
         # 删除传入ID信息，并删除子分类
-        Category.query.filter(Category.lft >= category.lft, Category.rgt <= category.rgt).delete()
+        ArticleCategory.query.filter(ArticleCategory.lft >= category.lft, ArticleCategory.rgt <= ArticleCategory.rgt).delete()
         # 更新受影响的左右树
         value = category.rgt - category.lft + 1
-        Category.query.filter(Category.lft > category.lft).update({Category.lft: Category.lft - value})
-        Category.query.filter(Category.rgt > category.rgt).update({Category.rgt: Category.rgt - value})
+        ArticleCategory.query.filter(ArticleCategory.lft > category.lft).update({ArticleCategory.lft: ArticleCategory.lft - value})
+        ArticleCategory.query.filter(ArticleCategory.rgt > category.rgt).update({ArticleCategory.rgt: ArticleCategory.rgt - value})
 
         db.session.commit()
 
     def get_category_all(self):
-        return Category.query.order_by(Category.lft).all()
+        return ArticleCategory.query.order_by(ArticleCategory.lft).all()

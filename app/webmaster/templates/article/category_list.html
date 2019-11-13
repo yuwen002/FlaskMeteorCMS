@@ -41,18 +41,26 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>分类名称</th>
-                                    <th>分类描述</th>
                                     <th>分类图片</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for category in categorys %}
+                                {% for category in res_category %}
                                     <tr class="{{ loop.cycle('gradeX', 'even gradeC') }}">
                                         <td>{{ category.id }}</td>
-                                        <td>{{ category.name }}</td>
-                                        <td>{{ category.description }}</td>
-                                        <td><img src="{{ url_for('get_file', filename=category.img) }}" width="150px"></td>
+                                        <td>
+                                            {% if category.depth == 1 %}&nbsp;&nbsp;┣━━{% endif %}
+                                            {% if category.depth > 1 %}&nbsp;&nbsp;┣{{ space|safe * category.depth }}{% endif %}
+                                            {{ category.name }}
+                                        </td>
+                                        <td>
+                                            {% if category.img %}
+                                                <img src="{{ url_for('get_file', filename=category.img) }}" width="150px">
+                                            {% else %}
+                                                无图片
+                                            {% endif %}
+                                        </td>
                                         <td>
                                             <div class="tpl-table-black-operation">
                                                 <a href="{{ url_for('singlepage.category_edit', category_id=category.id) }}">

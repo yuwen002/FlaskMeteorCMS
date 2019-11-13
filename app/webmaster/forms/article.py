@@ -3,7 +3,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from wtforms import StringField, SelectField
 from wtforms.validators import DataRequired
-from app.models import Category
+from app.models import ArticleCategory
 
 class ArticleCategoryForm(FlaskForm):
     name = StringField('分类名称', validators=[DataRequired(message=u'分类名称不能为空')])
@@ -19,11 +19,11 @@ class ArticleCategoryForm(FlaskForm):
 
     def __init__(self, *args, **kwargs):
         super(ArticleCategoryForm, self).__init__(*args, **kwargs)
-        category = Category.query.filter_by(fid=0).first()
+        category = ArticleCategory.query.filter_by(fid=0).first()
         if category is None:
             self.fid.choices = [('0', '顶级分类')]
         else:
-            category = Category.query.filter(Category.fid != 0).order_by(Category.lft).all()
+            category = ArticleCategory.query.filter(ArticleCategory.fid != 0).order_by(ArticleCategory.lft).all()
             category_list = [{'id': 0, 'name': '顶级分类'}]
             for v in category:
                 if v.depth == 1:
