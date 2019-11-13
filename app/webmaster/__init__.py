@@ -18,7 +18,7 @@ singlepage_blueprint = Blueprint(
 article_blueprint = Blueprint(
     'article',
     __name__,
-    url_prefix = '/master/article',
+    url_prefix='/master/article',
     template_folder='./templates'
 )
 

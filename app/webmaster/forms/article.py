@@ -23,8 +23,8 @@ class ArticleCategoryForm(FlaskForm):
         if category is None:
             self.fid.choices = [('0', '顶级分类')]
         else:
-            category = Category.query.filter(Category.fid!=0).order_by(Category.lft).all()
-            category_list = []
+            category = Category.query.filter(Category.fid != 0).order_by(Category.lft).all()
+            category_list = [{'id': 0, 'name': '顶级分类'}]
             for v in category:
                 if v.depth == 1:
                     category_list.append({"id": v.id, "name": u'┣━'+v.name})
