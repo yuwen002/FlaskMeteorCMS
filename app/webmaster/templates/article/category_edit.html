@@ -26,26 +26,22 @@
                             </div>
                             <div class="widget-body am-fr">
                                 {% from '_layout/_form_errors.html' import errors_info %}
-                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('article.category_add') }}" enctype="multipart/form-data">
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('article.category_edit') }}" enctype="multipart/form-data">
                                     <div class="am-form-group">
                                         <label for="name" class="am-u-sm-3 am-form-label">分类名称</label>
                                         <div class="am-u-sm-9">
                                             {{ form.name(class="tpl-form-input", placeholder="请输入分类名称") }}
                                             {{ errors_info(form.name.errors) }}
-                                        </div>
-                                    </div>
-
-                                    <div class="am-form-group">
-                                        <label for="name" class="am-u-sm-3 am-form-label">分类名称</label>
-                                        <div class="am-u-sm-9">
-                                            {{ form.fid() }}
-                                            {{ errors_info(form.fid.errors) }}
+                                            {{ errors_info(get_flashed_messages()) }}
                                         </div>
                                     </div>
 
                                     <div class="am-form-group">
                                         <label for="img" class="am-u-sm-3 am-form-label">分类图片</label>
                                         <div class="am-u-sm-9">
+                                            {% if category.img %}
+                                                <img src="{{ url_for('get_file', filename=category.img) }}" width="200">
+                                            {% endif %}
                                             {{ form.img(class="tpl-form-input") }}
                                             <small>请选择'jpg', 'jpeg', 'gif', 'png'图片</small>
                                             {{ errors_info(form.img.errors) }}

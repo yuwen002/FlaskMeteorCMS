@@ -109,7 +109,7 @@ class ArticleCategory(db.Model):
         category = ArticleCategory.query.get(id)
         return category
 
-    def add_category(self, name, fid=0, sort=0, img=''):
+    def  add_category(self, name, fid=0, sort=0, img=''):
         if int(fid) == 0:
             # 查询左值最小值如最小值为空进行顶级分类写入
             left = db.session.query(func.min(ArticleCategory.lft)).scalar()

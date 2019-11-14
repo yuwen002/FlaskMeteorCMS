@@ -1,9 +1,9 @@
 # coding: UTF-8
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from flask_login import login_required
 from app.webmaster import article_blueprint
 from app.models import ArticleCategory
-from app.webmaster.forms.article import ArticleCategoryForm
+from app.webmaster.forms.article import ArticleCategoryForm, ArticleCategoryEditForm
 from app.helpers import upload_mkdir
 from app.extensions import db
 
@@ -42,9 +42,24 @@ def category_add():
 @login_required
 def category_edit(category_id):
     category = ArticleCategory()
-    form = ArticleCategoryForm()
+    category_info = category.get_category(category_id)
+    form = ArticleCategoryEditForm()
 
-    info = category.get_category(category_id)
-    form.name.data = info.name
+    if form.validate_on_submit():
+        category_name = ArticleCategory.query.filter(ArticleCategory.name == form.name.data, ArticleCategory.id != category_id).first()
+        if category_name is None:
+            category.name = form.name.data
 
-    return render_template('article/category_edit.html', form=form)
+            img = form.img.data
+            if img:
+                upload_path, img_path = upload_mkdir(img.filename)
+                img.save(upload_path)
+                category.img = img_path
+
+            db.session.commit()
+        else:
+            flash('分类名称已存在')
+
+    form.name.data = category_info.name
+
+    return render_template('article/category_edit.html', form=form, category=category)

@@ -50,8 +50,8 @@
                                     <tr class="{{ loop.cycle('gradeX', 'even gradeC') }}">
                                         <td>{{ category.id }}</td>
                                         <td>
-                                            {% if category.depth == 1 %}&nbsp;&nbsp;┣━━{% endif %}
-                                            {% if category.depth > 1 %}&nbsp;&nbsp;┣{{ space|safe * category.depth }}{% endif %}
+                                            {% if category.depth == 1 %}&nbsp;&nbsp;┣━{% endif %}
+                                            {% if category.depth > 1 %}&nbsp;&nbsp;┣━{{ '━'|safe * category.depth }}{% endif %}
                                             {{ category.name }}
                                         </td>
                                         <td>
