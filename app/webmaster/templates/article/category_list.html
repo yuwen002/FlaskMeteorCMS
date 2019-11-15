@@ -63,10 +63,10 @@
                                         </td>
                                         <td>
                                             <div class="tpl-table-black-operation">
-                                                <a href="{{ url_for('singlepage.category_edit', category_id=category.id) }}">
+                                                <a href="{{ url_for('article.category_edit', category_id=category.id) }}">
                                                     <i class="am-icon-pencil"></i> 编辑
                                                 </a>
-                                                <a href="{{ url_for('singlepage.category_delete', category_id=category.id) }}" onclick="return category_delete();" class="tpl-table-black-operation-del">
+                                                <a href="{{ url_for('article.category_delete', category_id=category.id) }}" onclick="return category_delete();" class="tpl-table-black-operation-del">
                                                     <i class="am-icon-trash"></i> 删除
                                                 </a>
                                             </div>

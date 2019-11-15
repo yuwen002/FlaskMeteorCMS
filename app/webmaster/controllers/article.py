@@ -48,18 +48,30 @@ def category_edit(category_id):
     if form.validate_on_submit():
         category_name = ArticleCategory.query.filter(ArticleCategory.name == form.name.data, ArticleCategory.id != category_id).first()
         if category_name is None:
-            category.name = form.name.data
+            category_info.name = form.name.data
 
             img = form.img.data
             if img:
                 upload_path, img_path = upload_mkdir(img.filename)
                 img.save(upload_path)
-                category.img = img_path
+                category_info.img = img_path
 
             db.session.commit()
+
+            return redirect(url_for('article.category_list'))
         else:
             flash('分类名称已存在')
 
     form.name.data = category_info.name
 
-    return render_template('article/category_edit.html', form=form, category=category)
+    return render_template('article/category_edit.html', form=form, category=category_info)
+
+
+@article_blueprint.route('/cagtgory_delete/<int:category_id>')
+@login_required
+def category_delete(category_id):
+    category = ArticleCategory.query.get_or_404(category_id)
+    db.session.delete(category)
+    db.session.commit()
+
+    return redirect(url_for('article.category_list'))

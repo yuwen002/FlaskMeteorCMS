@@ -7,7 +7,7 @@
     <div class="container-fluid am-cf">
                 <div class="row">
                     <div class="am-u-sm-12 am-u-md-12 am-u-lg-9">
-                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 修改分类添加 <small>News Category Add </small></div>
+                        <div class="page-header-heading"><span class="am-icon-home page-header-heading-icon"></span> 修改分类添加 <small>News Category Edit </small></div>
                     </div>
                 </div>
 
@@ -26,7 +26,7 @@
                             </div>
                             <div class="widget-body am-fr">
                                 {% from '_layout/_form_errors.html' import errors_info %}
-                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('article.category_edit') }}" enctype="multipart/form-data">
+                                <form class="am-form tpl-form-border-form tpl-form-border-br" method="post" action="{{ url_for('article.category_edit', category_id=category.id) }}" enctype="multipart/form-data">
                                     <div class="am-form-group">
                                         <label for="name" class="am-u-sm-3 am-form-label">分类名称</label>
                                         <div class="am-u-sm-9">
