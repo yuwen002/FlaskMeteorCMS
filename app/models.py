@@ -109,7 +109,7 @@ class ArticleCategory(db.Model):
         category = ArticleCategory.query.get(id)
         return category
 
-    def  add_category(self, name, fid=0, sort=0, img=''):
+    def add_category(self, name, fid=0, sort=0, img=''):
         if int(fid) == 0:
             # 查询左值最小值如最小值为空进行顶级分类写入
             left = db.session.query(func.min(ArticleCategory.lft)).scalar()
@@ -147,3 +147,30 @@ class ArticleCategory(db.Model):
 
     def get_category_all(self):
         return ArticleCategory.query.order_by(ArticleCategory.lft).all()
+
+
+class Article(db.Model):
+    __tablename__ = 'articles'
+    id = db.Column(db.Integer, primary_key=True, comment='自增ID')
+    category_id = db.Column(db.Integer, db.ForeignKey('article_category.id'), default=0, comment='关联分类ID')
+    external_links = db.Column(db.String(300), default=None, comment='文章外链')
+    title = db.Column(db.String(64), nullable=False, comment='文章标题')
+    short_title = db.Column(db.String(32), comment='文章短标题')
+    synopsis = db.Column(db.String(64), comment='文章简介')
+    author = db.Column(db.String(10), comment='文章作者')
+    article_date = db.Column(db.DateTime, default=datetime.now(), comment='文章日期')
+    sort = db.Column(db.Integer, comment='文章排序')
+    recommend = db.Column(db.String(20), comment='文章推荐')
+    tag = db.Column(db.String(80), comment='TAG标签')
+    source = db.Column(db.String(24), comment='文章来源')
+    img = db.Column(db.String(200), comment='文章图片')
+    content = db.Column(db.Text, comment='文章内容')
+    status = db.Column(db.SmallInteger, comment='文章状态')
+    comment_on_status = db.Column(db.Boolean, default=True, comment='文章评论状态')
+
+    seo_title = db.Column(db.String(100), comment='SEO标题')
+    seo_keyword = db.Column(db.String(150), comment='SEO关键字')
+    seo_description = db.Column(db.String(200), comment='SEO描述')
+
+    created_at = db.Column(db.DateTime, default=datetime.now(), comment='写入时间')
+    updated_at = db.Column(db.DateTime, default=datetime.now(), comment='最后更新时间')
