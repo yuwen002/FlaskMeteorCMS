@@ -100,7 +100,7 @@ class ArticleCategory(db.Model):
     depth = db.Column(db.SmallInteger, default=0)
     input_time = db.Column(db.DateTime, default=datetime.now())
     update_time = db.Column(db.DateTime, default=datetime.now())
-    # news = db.relationship()
+    article = db.relationship('Article', backref='articles')
 
     def __repr__(self):
         return "<Category %r>" % self.name
@@ -152,9 +152,9 @@ class ArticleCategory(db.Model):
 class Article(db.Model):
     __tablename__ = 'articles'
     id = db.Column(db.Integer, primary_key=True, comment='自增ID')
+    title = db.Column(db.String(64), nullable=False, comment='文章标题')
     category_id = db.Column(db.Integer, db.ForeignKey('article_category.id'), default=0, comment='关联分类ID')
     external_links = db.Column(db.String(300), default=None, comment='文章外链')
-    title = db.Column(db.String(64), nullable=False, comment='文章标题')
     short_title = db.Column(db.String(32), comment='文章短标题')
     synopsis = db.Column(db.String(64), comment='文章简介')
     author = db.Column(db.String(10), comment='文章作者')

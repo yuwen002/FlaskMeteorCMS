@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_required
 from app.webmaster import article_blueprint
 from app.models import ArticleCategory
-from app.webmaster.forms.article import ArticleCategoryForm, ArticleCategoryEditForm
+from app.webmaster.forms.article import ArticleCategoryForm, ArticleCategoryEditForm, ArticleForm
 from app.helpers import upload_mkdir
 from app.extensions import db
 
@@ -75,3 +75,25 @@ def category_delete(category_id):
     db.session.commit()
 
     return redirect(url_for('article.category_list'))
+
+
+@article_blueprint.route('/article_add')
+@login_required
+def article_add():
+    form = ArticleForm()
+    return render_template('article/article_add.html', form=form)
+
+
+@article_blueprint.route('article_list')
+@login_required
+def article_list():
+
+    return render_template('article/article_list.html')
+
+
+def article_edit():
+    pass
+
+
+def article_delete():
+    pass
