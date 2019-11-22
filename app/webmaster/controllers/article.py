@@ -81,6 +81,8 @@ def category_delete(category_id):
 @login_required
 def article_add():
     form = ArticleForm()
+    if form.validate_on_submit():
+        pass
     return render_template('article/article_add.html', form=form)
 
 
@@ -88,7 +90,7 @@ def article_add():
 @login_required
 def article_list():
 
-    return render_template('article/article_list.html')
+    return render_template('article/article_list.html', methods=['GET', 'POST'])
 
 
 def article_edit():

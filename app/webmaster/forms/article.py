@@ -48,9 +48,9 @@ class ArticleCategoryEditForm(FlaskForm):
 
 
 class ArticleForm(FlaskForm):
-    title = StringField('新闻分类', validators=[DataRequired(message='文章标题不能为空')])
+    title = StringField('文章标题', validators=[DataRequired(message='文章标题不能为空')])
     category_id = SelectField(
-        '分类',
+        '文章分类',
         coerce=int,
         render_kw={
             "data-am-selected": "{btnSize:'sm'}"
@@ -72,7 +72,7 @@ class ArticleForm(FlaskForm):
     seo_description = StringField('SEO描述')
 
     def __init__(self, *args, **kwargs):
-        super(ArticleCategoryForm, self).__init__(*args, **kwargs)
+        super(ArticleForm, self).__init__(*args, **kwargs)
         category = ArticleCategory()
         category_all = category.get_category_all()
 
@@ -85,4 +85,4 @@ class ArticleForm(FlaskForm):
             elif v.depth > 1:
                 category_list.append({"id": v.id, "name": '┣━' + '━' * v.depth + v.name})
 
-        self.fid.choices = [(v['id'], v['name']) for v in category_list]
+        self.category_id.choices = [(v['id'], v['name']) for v in category_list]
