@@ -64,6 +64,7 @@ class ArticleForm(FlaskForm):
     sort = IntegerField('文章排序')
     recommend = StringField('文章推荐')
     tag = StringField('TAG标签')
+    source = StringField('文章来源')
     img = FileField('文章图片', validators=[FileAllowed(['jpg', 'jpeg', 'gif', 'png'])])
     content = CKEditorField('内容')
     comment_on_status = BooleanField('评论状态', default=True)

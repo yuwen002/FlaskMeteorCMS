@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import login_required
 from app.webmaster import article_blueprint
-from app.models import ArticleCategory
+from app.models import ArticleCategory, Article
 from app.webmaster.forms.article import ArticleCategoryForm, ArticleCategoryEditForm, ArticleForm
 from app.helpers import upload_mkdir
 from app.extensions import db
@@ -77,20 +77,66 @@ def category_delete(category_id):
     return redirect(url_for('article.category_list'))
 
 
-@article_blueprint.route('/article_add')
+@article_blueprint.route('/article_add', methods=['GET', 'POST'])
 @login_required
 def article_add():
     form = ArticleForm()
     if form.validate_on_submit():
-        pass
+        title = form.title.data
+        short_title = form.short_title.data
+        category_id = form.category_id.data
+        synopsis = form.synopsis.data
+        author = form.author.data
+        article_date = form.article_date.data
+        sort = form.sort.data
+        recommend = form.recommend.data
+        tag = form.tag.data
+        source = form.source.data
+        img = form.img.data
+        content = form.content.data
+        comment_on_status = form.comment_on_status.data
+        seo_title = form.seo_title.data
+        seo_keyword = form.seo_keyword.data
+        seo_description = form.seo_description.data
+
+        # 图片上传
+        img_path = ''
+        if img:
+            upload_path, img_path = upload_mkdir(img.filename)
+            img.save(upload_path)
+
+        article = Article(
+            title=title,
+            short_title=short_title,
+            category_id=category_id,
+            synopsis=synopsis,
+            author=author,
+            article_date=article_date,
+            sort=sort,
+            recommend=recommend,
+            source=source,
+            tag=tag,
+            img=img_path,
+            content=content,
+            comment_on_status=comment_on_status,
+            seo_title=seo_title,
+            seo_keyword=seo_keyword,
+            seo_description=seo_description
+        )
+
+        db.session.add(article)
+        db.session.commit()
+
+        return redirect(url_for('article.article_list'))
+
     return render_template('article/article_add.html', form=form)
 
 
-@article_blueprint.route('article_list')
+@article_blueprint.route('article_list', methods=['GET'])
 @login_required
 def article_list():
 
-    return render_template('article/article_list.html', methods=['GET', 'POST'])
+    return render_template('article/article_list.html')
 
 
 def article_edit():
